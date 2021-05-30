@@ -12,26 +12,53 @@ import nxtbtn from "./images/next.png";
 
 
 function App() {
-
+  // 날씨
   let icon;
   let temp ;
   let city;
   const [whether, setwether] = useState({'Icon':'', 'Temp':'', 'City':''});
-
-
+  
   const setWhether = useCallback((icon, temp, city) => {
     setwether({'Icon':icon, 'Temp':temp, 'City':city});
   })
-  
-  const moveToSection = (e) => {
-    e.preventDefault();
 
-  }
-  const arr = ["Main", "About Me", "Portpolios", "Contect ME"];
-  const test = arr.map((el,idx) => {
 
-    return <li key={idx}><a href="#">{el}</a></li>
+  //GNB
+  const setNav = ['Main', 'About Me', 'Portpolios', 'Contect Me'];
+
+  const setGnb = setNav.map((el, idx) => {
+    return ( <li key = {idx}><a href= "#" onClick = {() => test(idx)}>{el}</a></li>)
   })
+
+  // scroll animation
+  const test = (idx) => {
+    const sectionOffset = document.querySelectorAll('.wrap section')[idx].offsetTop;
+    let saveOffset = sectionOffset;
+    // console.log('sectionOffset', sectionOffset)
+    // if(idx === 0) {
+    //   window.scrollTo(saveOffset, sectionOffset);
+    // } else if(idx === 1) {
+    //   window.scrollTo(saveOffset, sectionOffset);
+    // } else if(idx === 2) {
+    //   window.scrollTo(saveOffset, sectionOffset);
+    // } else if(idx === 3) {
+    //   window.scrollTo(saveOffset, sectionOffset);
+    // }
+  }
+
+  let windowScrollY = window.scrollY;
+  const headerGnb = document.querySelector('header').clientHeight;
+  console.log(headerGnb)
+  
+  const changeColorToGnb = (idx) => {
+    // $('.header_wrap a.now').removeClass('now')
+    // $('.m_header_wrap .center a.now').removeClass('now')
+
+    // $('.header_wrap a').eq(idx).addClass('now')
+    // $('.m_header_wrap .center a').eq(idx).addClass('now')
+  }
+
+
   
 
   useLayoutEffect( () => {
@@ -77,14 +104,7 @@ function App() {
       <div className="dim"></div>
       <nav className="header_wrap">
         <ul>
-          {
-            arr.length > 0 ?
-              test : null
-          }
-          {/* <li><a href="#" className="now" onClick={moveToSection}>Main</a></li>
-          <li><a href="#" onClick={moveToSection}>About Me</a></li>
-          <li><a href="#">Portpolios</a></li>
-          <li><a href="#">Contect Me</a></li> */}
+          {setGnb}
         </ul>
       </nav>
       <a href="#" className="m_header">
