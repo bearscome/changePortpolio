@@ -20,35 +20,54 @@ function App() {
 
 
   const setWhether = useCallback((icon, temp, city) => {
-    setwether({'Icon':icon, 'Temp':temp, 'City':city})
+    setwether({'Icon':icon, 'Temp':temp, 'City':city});
   })
   
+  const moveToSection = (e) => {
+    e.preventDefault();
+
+  }
+  const arr = ["Main", "About Me", "Portpolios", "Contect ME"];
+  const test = arr.map((el,idx) => {
+
+    return <li key={idx}><a href="#">{el}</a></li>
+  })
+  
+
   useLayoutEffect( () => {
     // 날씨
-
     axios({
       url:'http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=87daf96918fe95de1b0a4ca2cdc418fb&units=metric',
       method:'get',
       responseType:'json'
     }).then(respones => {
       
-      temp = Math.floor(respones.data.main.temp) + '°C';
+      temp = Math.floor(respones.data.main.temp) + '°C';;
       city = respones.data.name;
-      icon = 'http://openweathermap.org/img/wn/'+respones.data.weather[0].icon+'@2x.png'
-      setWhether(icon, temp, city)
-
-      
-      
-
-      
-
+      icon = 'http://openweathermap.org/img/wn/'+respones.data.weather[0].icon+'@2x.png';
+      setWhether(icon, temp, city);
     })
 
+    //mainTextanmt
+    let i = 1;
+    function moving() {
+      const text1 = document.querySelectorAll('.main_text li')[i];
+      const text2 = document.querySelectorAll('.main_text li')[0];
+      const text3 = document.querySelectorAll('.main_text li')[1];
+      const text4 = document.querySelectorAll('.main_text li')[2];
 
+      text2.classList.remove('on')
+      text3.classList.remove('on')
+      text4.classList.remove('on')
+      
+      i++;
+      if (i > 2) {
+        i = 0;
+      }
+      text1.classList.add('on');
 
-    return () => {
-
-    };
+    }
+    setInterval(moving, 2500);
   }, [])
 
   return (
@@ -57,10 +76,16 @@ function App() {
     <header className="header">
       <div className="dim"></div>
       <nav className="header_wrap">
-        <a href="#" className="now">Main</a>
-        <a href="#">About Me</a>
-        <a href="#">Portpolios</a>
-        <a href="#">Contect Me</a>
+        <ul>
+          {
+            arr.length > 0 ?
+              test : null
+          }
+          {/* <li><a href="#" className="now" onClick={moveToSection}>Main</a></li>
+          <li><a href="#" onClick={moveToSection}>About Me</a></li>
+          <li><a href="#">Portpolios</a></li>
+          <li><a href="#">Contect Me</a></li> */}
+        </ul>
       </nav>
       <a href="#" className="m_header">
         <span className="mv1"></span>
